@@ -14,5 +14,16 @@ def find_longest_word(sentence):
 
     print(f"Longest Word: {longest_word} | Length: {longest_nchars}")
 
+def move_capitals_to_front(word):
+    letters = []
+    
+    for i in word:
+        if str(i).isupper():
+            letters.insert(0, i)
 
-find_longest_word("This is a sentence with many different words!")
+        else:
+            letters.append(i)
+
+    print(letters)
+
+move_capitals_to_front("eHllo")
