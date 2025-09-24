@@ -75,4 +75,3 @@ def test_knapsack():
     weights = [10, 15, 10, 1, 5]
     values = [50, 60, 100, 50, 40]
     assert 190 == solutions.knapsack(capacity, weights, values, len(values))
-
