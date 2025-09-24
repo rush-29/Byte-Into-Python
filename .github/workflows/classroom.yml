@@ -1,0 +1,99 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Getting Started
+      id: getting-started
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Getting Started
+        setup-command: pip install pytest
+        command: pytest Getting\ Started/test_hello_world.py
+        timeout: 10
+        max-score: 5
+    - name: 'Challenge 5: Distribute chocolates'
+      id: challenge-5-distribute-chocolates
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Challenge 5: Distribute chocolates'
+        setup-command: pip install pytest
+        command: pytest test_solutions.py::test_distribute_chocolates
+        timeout: 10
+        max-score: 5
+    - name: 'Challenge 2: Move capitals'
+      id: challenge-2-move-capitals
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Challenge 2: Move capitals'
+        setup-command: pip install pytest
+        command: pytest test_solutions.py::test_move_capitals_to_front
+        timeout: 10
+        max-score: 5
+    - name: 'Challenge 3: FizzBuzz'
+      id: challenge-3-fizzbuzz
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Challenge 3: FizzBuzz'
+        setup-command: pip install pytest
+        command: pytest test_solutions.py::test_fizzbuzz
+        timeout: 10
+        max-score: 5
+    - name: 'Challenge 4: Open doors'
+      id: challenge-4-open-doors
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Challenge 4: Open doors'
+        setup-command: pip install pytest
+        command: pytest test_solutions.py::test_number_of_open_doors
+        timeout: 10
+        max-score: 5
+    - name: 'Challenge 5: Distribute Chocolates'
+      id: challenge-5-distribute-chocolates
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Challenge 5: Distribute Chocolates'
+        setup-command: pip install pytest
+        command: pytest test_solutions.py::test_distribute_chocolates
+        timeout: 10
+        max-score: 5
+    - name: 'Challenge 6: Change options'
+      id: challenge-6-change-options
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Challenge 6: Change options'
+        setup-command: pip install pytest
+        command: pytest test_solutions.py::test_change_options
+        timeout: 10
+        max-score: 5
+    - name: 'Challenge 7: Knapsack'
+      id: challenge-7-knapsack
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Challenge 7: Knapsack'
+        setup-command: pip install pytest
+        command: pytest test_solutions.py::test_knapsack
+        timeout: 10
+        max-score: 5
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        GETTING-STARTED_RESULTS: "${{steps.getting-started.outputs.result}}"
+        CHALLENGE-5-DISTRIBUTE-CHOCOLATES_RESULTS: "${{steps.challenge-5-distribute-chocolates.outputs.result}}"
+        CHALLENGE-2-MOVE-CAPITALS_RESULTS: "${{steps.challenge-2-move-capitals.outputs.result}}"
+        CHALLENGE-3-FIZZBUZZ_RESULTS: "${{steps.challenge-3-fizzbuzz.outputs.result}}"
+        CHALLENGE-4-OPEN-DOORS_RESULTS: "${{steps.challenge-4-open-doors.outputs.result}}"
+        CHALLENGE-6-CHANGE-OPTIONS_RESULTS: "${{steps.challenge-6-change-options.outputs.result}}"
+        CHALLENGE-7-KNAPSACK_RESULTS: "${{steps.challenge-7-knapsack.outputs.result}}"
+      with:
+        runners: getting-started,challenge-5-distribute-chocolates,challenge-2-move-capitals,challenge-3-fizzbuzz,challenge-4-open-doors,challenge-5-distribute-chocolates,challenge-6-change-options,challenge-7-knapsack
